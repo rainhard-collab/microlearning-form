@@ -94,10 +94,11 @@ export default function AudienceTab({ formData, onChange, onGenerate }) {
   function addDummy(key, template) { onChange(key, [...formData[key], { ...template, id: Date.now() }]) }
 
   function handleGenerate() {
+    if (onGenerate) { onGenerate(); return }
     setGenerating(true)
     setTimeout(() => {
       setGenerating(false)
-      alert('✦ Training module sent for generation!\n\nThe AI is now processing your inputs. You will be notified when the module is ready to publish.')
+      alert('✦ Training module sent for generation!')
     }, 500)
   }
 

@@ -4,6 +4,8 @@ import StatusBar      from './components/StatusBar'
 import ModuleHeader   from './components/ModuleHeader'
 import CourseSetupTab from './components/CourseSetupTab'
 import AudienceTab    from './components/AudienceTab'
+import PreviewView    from './components/PreviewView'
+import { buildModuleData } from './mockPreview'
 
 let _lid = 0
 const newId = () => ++_lid
@@ -69,9 +71,12 @@ const INITIAL = {
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('setup')
-  const [status,    setStatus]    = useState('Pending')
-  const [formData,  setFormData]  = useState(INITIAL)
+  const [view,       setView]       = useState('form')
+  const [processing, setProcessing] = useState(false)
+  const [activeTab,  setActiveTab]  = useState('setup')
+  const [status,     setStatus]     = useState('Pending')
+  const [formData,   setFormData]   = useState(INITIAL)
+  const [moduleData, setModuleData] = useState(null)
 
   function onChange(key, value) {
     setFormData(prev => ({ ...prev, [key]: value }))
@@ -89,6 +94,45 @@ export default function App() {
   function onContinueToAudience() {
     setActiveTab('audience')
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function onGenerate() {
+    setStatus('Processing')
+    setProcessing(true)
+    setTimeout(() => {
+      setModuleData(buildModuleData(formData))
+      setProcessing(false)
+      setStatus('Unpublished')
+      setView('preview')
+      window.scrollTo({ top: 0, behavior: 'auto' })
+    }, 2500)
+  }
+
+  function onEdit() {
+    setView('form')
+    setStatus('Pending')
+    setActiveTab('setup')
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }
+
+  function onDiscard() {
+    if (!window.confirm('Discard this generated module and return to the form?')) return
+    setView('form')
+    setStatus('Pending')
+    setModuleData(null)
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }
+
+  if (view === 'preview' && moduleData) {
+    return (
+      <PreviewView
+        module={moduleData}
+        status={status}
+        setStatus={setStatus}
+        onEdit={onEdit}
+        onDiscard={onDiscard}
+      />
+    )
   }
 
   return (
@@ -120,9 +164,24 @@ export default function App() {
           />
         )}
         {activeTab === 'audience' && (
-          <AudienceTab formData={formData} onChange={onChange} />
+          <AudienceTab formData={formData} onChange={onChange} onGenerate={onGenerate} />
         )}
       </div>
+
+      {processing && (
+        <div className="processing-overlay">
+          <div className="processing-card">
+            <div className="processing-spinner" />
+            <div className="processing-title">AI is generating your module content…</div>
+            <div className="processing-sub">Analysing your inputs, drafting reading pages, flashcards, and quiz questions.</div>
+            <div className="processing-steps">
+              <div className="processing-step done">✓ Reading objectives and knowledge base</div>
+              <div className="processing-step done">✓ Drafting reading pages per lesson</div>
+              <div className="processing-step active">↻ Generating flashcards and quiz…</div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
