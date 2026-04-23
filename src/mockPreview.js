@@ -14,6 +14,8 @@ export const MOCK_LESSONS = [
     ],
     image: { caption: 'WHO 7-Step Hand Hygiene Technique' },
     video: {
+      description:
+        'A 4-minute WHO training video demonstrating the full 7-step handwashing technique in real time. Features close-up footage of each step, narration explaining when each motion matters, and common mistakes highlighted with slow-motion replays. Ideal viewing before the practical hand hygiene assessment.',
       takeaway:
         'Wash hands for at least 20 seconds to effectively remove pathogens, especially after glove removal.',
     },
@@ -53,6 +55,8 @@ export const MOCK_LESSONS = [
     ],
     image: { caption: 'PPE Donning and Doffing Sequence' },
     video: {
+      description:
+        'A 6-minute practical demonstration filmed in a care setting. A clinical educator walks through donning four PPE items in sequence, then removes them using the safe doffing technique. Includes side-by-side comparisons of correct versus unsafe removal, and annotations showing where contamination typically occurs.',
       takeaway:
         'Doffing is when contamination happens — slow down and follow the exact reverse order to protect yourself and others.',
     },
@@ -92,6 +96,8 @@ export const MOCK_LESSONS = [
     ],
     image: { caption: 'Clinical Waste Streams — Colour Coded Bins' },
     video: {
+      description:
+        'A 5-minute scenario-based video following a care worker through a shift: managing a bodily fluid spill, disposing of sharps safely, and handling soiled linen. Each scenario pauses for a short quiz before revealing the correct action, reinforcing decision-making under real time pressure.',
       takeaway:
         'Every body fluid exposure is a potential bloodborne pathogen risk — there are no low-risk encounters.',
     },

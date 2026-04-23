@@ -54,7 +54,7 @@ function WhatIsThisModule({ formData, onChange }) {
           <option>Skill Upskilling</option>
         </select>
       </FieldRow>
-      <FieldRow label="Learning Objective" help="By the end of this module, learners will be able to… (also used for AI alignment check with knowledge base)">
+      <FieldRow label="Learning Objective" required help="By the end of this module, learners will be able to… (also used for AI alignment check with knowledge base)">
         <textarea className="textarea" placeholder="e.g. By the end of this module, learners will be able to…" rows={3}
           value={learningObjective} onChange={e => onChange('learningObjective', e.target.value)} />
       </FieldRow>

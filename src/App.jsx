@@ -19,6 +19,7 @@ function createLesson(index) {
     images: [],
     videoUrl: '',
     videoTitle: '',
+    videoDescription: '',
     videoDuration: '',
     videoDurationError: null,
     videoFetching: false,

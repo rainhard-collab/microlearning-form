@@ -73,6 +73,7 @@ export default function LessonCard({ lesson, index, onChange, onDelete, canDelet
     const isYT = url.includes('youtube.com') || url.includes('youtu.be')
     update('videoUrl', url)
     update('videoTitle', '')
+    update('videoDescription', '')
     update('videoDuration', '')
     update('videoDurationError', null)
     if (isYT && url.length > 25) {
@@ -80,6 +81,7 @@ export default function LessonCard({ lesson, index, onChange, onDelete, canDelet
       setTimeout(() => {
         update('videoFetching', false)
         update('videoTitle', 'YouTube Video — title fetched automatically')
+        update('videoDescription', 'A short instructional video demonstrating the key technique step-by-step. Covers the core concepts, shows real-world examples, and highlights common mistakes to avoid. AI will use this overview together with the learning objective to generate the key takeaways shown below.')
         update('videoDuration', '')
       }, 1600)
     }
@@ -189,13 +191,23 @@ export default function LessonCard({ lesson, index, onChange, onDelete, canDelet
             )}
 
             {lesson.videoTitle && (
-              <div className="video-preview">
-                <div className="yt-thumb">▶</div>
-                <div className="video-preview-info">
-                  <div className="video-preview-title">{lesson.videoTitle}</div>
-                  <div className="video-preview-sub">YouTube</div>
+              <>
+                <div className="video-preview">
+                  <div className="yt-thumb">▶</div>
+                  <div className="video-preview-info">
+                    <div className="video-preview-title">{lesson.videoTitle}</div>
+                    <div className="video-preview-sub">YouTube</div>
+                  </div>
                 </div>
-              </div>
+                {lesson.videoDescription && (
+                  <div className="video-overview-card">
+                    <div className="video-overview-label">
+                      <span className="auto-badge">Auto-fetched</span> Video overview
+                    </div>
+                    <div className="video-overview-text">{lesson.videoDescription}</div>
+                  </div>
+                )}
+              </>
             )}
 
             {/* Duration input — appears after URL entered */}
